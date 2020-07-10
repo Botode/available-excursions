@@ -1,0 +1,12 @@
+* {
+  border: 1px solid red;
+}
+
+*::before {
+  border: 1px solid blue;
+}
+
+*::after {
+  border: 1px solid green;
+}
+/*# sourceMappingURL=main.css.map */

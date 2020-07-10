@@ -1,0 +1,17 @@
+
+* {
+  border: 1px solid red;
+}
+
+*::before {
+  border: 1px solid blue;
+}
+
+*::after {
+  border: 1px solid green;
+}
+
+body {
+  // background: yellow;
+  // color: $color;
+}

@@ -1,0 +1,39 @@
+{
+  "private": "true",
+  "scripts": {
+    "start": "browser-sync start --server 'src' --no-notify --no-ui --cwd 'src' --files 'index.html,styles/**/*'",
+    "test": "editorconfig-checker --exclude '.git|node_modules|.DS_Store'",
+    "html": "html-minifier --remove-comments --collapse-whitespace --input-dir src --output-dir dist --file-ext html",
+    "styles": "postcss src/styles/index.css --use postcss-import --use post-csso --no-map --output dist/styles/index.css",
+    "build": "npm run html && npm run styles"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.19",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.4",
+    "browser-sync": "^2.26.7",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.6.0",
+    "csv-loader": "^3.0.3",
+    "editorconfig-checker": "^3.1.0",
+    "express": "^4.17.1",
+    "file-loader": "^6.0.0",
+    "html-minifier": "^4.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "postcss-cli": "^7.1.1",
+    "postcss-csso": "^4.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-server": "^3.11.0",
+    "xml-loader": "^1.2.1"
+  }
+}
