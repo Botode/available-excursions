@@ -19,15 +19,18 @@ const optimization = () => {
   };
 
   if (isProd) {
-    config.minimizer = [new OptimizeCssAssetWebpackPlugin(), new TerserWebpackPlugin()];
+    config.minimizer = [
+      new OptimizeCssAssetWebpackPlugin(),
+      new TerserWebpackPlugin(),
+    ];
   }
 
   return config;
 };
 
-const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
-const cssLoaders = (extra) => {
+const cssLoaders = extra => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -49,7 +52,7 @@ const cssLoaders = (extra) => {
   return loaders;
 };
 
-const babelOptions = (preset) => {
+const babelOptions = preset => {
   const opts = {
     presets: ['@babel/preset-env'],
     plugins: ['@babel/plugin-proposal-class-properties'],
