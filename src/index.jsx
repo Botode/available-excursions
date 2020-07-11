@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Post from '@models/Post';
 // import json from './assets/json.json'
 // import xml from './assets/data.xml'
@@ -10,9 +9,12 @@ import './babel';
 import './styles/styles.css';
 import './styles/less.less';
 import './styles/scss.scss';
+import $ from 'jquery';
 
 const post = new Post('Webpack Post Title', WebpackLogo);
 $('pre').addClass('code').html(post.toString());
+// document.querySelector('pre').classList.add('code');
+// document.querySelector('pre').innerHTML = post.toString();
 
 const App = () => (
   <div className="container">
