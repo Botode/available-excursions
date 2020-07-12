@@ -1,17 +1,24 @@
 {
-  // "parser": "babel-eslint",
-  // "rules": {
-  //   // "no-console": "off",
-  //   // "no-unused-vars": "warn",
-  //   "prettier/prettier": ["error"]
-  // },
-  // "env": {
-  //   "es6": true,
-  //   "browser": true,
-  //   "node": true
-  // },"plugin:node/recommended"
-  "extends": ["eslint:recommended","airbnb", "prettier","wesbos"],
-  // "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "warn",
+    "prettier/prettier": ["error"],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["registration"]
+      }
+    ]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "airbnb", "prettier"],
+  "plugins": ["prettier"],
   "settings": {
     "import/resolver": ["node", "webpack"]
   }

@@ -8,6 +8,7 @@ const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugi
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const PostCSSImport = require('postcss-import');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const autoprefixer = require('autoprefixer');
 const precss = require('precss');
@@ -32,7 +33,8 @@ const optimization = () => {
   return config;
 };
 
-const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const filename = (ext) =>
+  isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
 
 const postcssLoader = {
   loader: 'postcss-loader',
@@ -42,7 +44,7 @@ const postcssLoader = {
   },
 };
 
-const cssLoaders = extra => {
+const cssLoaders = (extra) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -62,7 +64,7 @@ const cssLoaders = extra => {
   return loaders;
 };
 
-const babelOptions = preset => {
+const babelOptions = (preset) => {
   const opts = {
     presets: ['@babel/preset-env'],
     plugins: ['@babel/plugin-proposal-class-properties'],
@@ -93,16 +95,20 @@ const jsLoaders = () => {
 const plugins = () => {
   const base = [
     new HTMLWebpackPlugin({
-      template: './index.html',
+      template: './public/index.html',
+      filename: './index.html',
+      favicon: './public/favicon.ico',
       minify: {
         collapseWhitespace: isProd,
+        removeComments: isProd,
+        minifyJS: isProd,
       },
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src/favicon.ico'),
+          from: path.resolve(__dirname, 'src/public/favicon.ico'),
           to: path.resolve(__dirname, 'dist'),
         },
       ],
@@ -111,6 +117,7 @@ const plugins = () => {
       filename: filename('css'),
     }),
     new webpack.HashedModuleIdsPlugin(),
+    new ManifestPlugin(),
   ];
 
   if (isProd) {
@@ -124,15 +131,14 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    main: ['@babel/polyfill', './index.jsx'],
-    analytics: './analytics.ts',
+    script: './app.js',
   },
   output: {
-    filename: filename('js'),
     path: path.resolve(__dirname, 'dist'),
+    filename: filename('js'),
   },
   resolve: {
-    extensions: ['.js', '.json', '.png'],
+    extensions: ['.js', '.json', '.png', '.jsx'],
     alias: {
       '@models': path.resolve(__dirname, 'src/models'),
       '@': path.resolve(__dirname, 'src'),
