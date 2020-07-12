@@ -1,4 +1,7 @@
-$border: 1px solid #ccc;
+@import "custom";
+@import "~bootstrap/scss/bootstrap";
+
+$border: 1px solid rgb(33, 30, 243);
 
 .card {
   padding: 1rem;

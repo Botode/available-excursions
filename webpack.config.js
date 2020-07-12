@@ -7,6 +7,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const PostCSSImport = require('postcss-import');
+
+const autoprefixer = require('autoprefixer');
+const precss = require('precss');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -30,6 +34,14 @@ const optimization = () => {
 
 const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
+const postcssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    ident: 'postcss',
+    plugins: [PostCSSImport, precss(), autoprefixer()],
+  },
+};
+
 const cssLoaders = extra => {
   const loaders = [
     {
@@ -40,9 +52,7 @@ const cssLoaders = extra => {
       },
     },
     'css-loader',
-    {
-      loader: 'postcss-loader',
-    },
+    postcssLoader,
   ];
 
   if (extra) {

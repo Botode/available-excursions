@@ -9,8 +9,8 @@
   //   "es6": true,
   //   "browser": true,
   //   "node": true
-  // },
-  "extends": ["airbnb", "prettier","wesbos"],
+  // },"plugin:node/recommended"
+  "extends": ["eslint:recommended","airbnb", "prettier","wesbos"],
   // "plugins": ["prettier"],
   "settings": {
     "import/resolver": ["node", "webpack"]

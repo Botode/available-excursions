@@ -12,7 +12,9 @@ import './styles/scss.scss';
 import $ from 'jquery';
 
 const post = new Post('Webpack Post Title', WebpackLogo);
-$('pre').addClass('code').html(post.toString());
+$('pre')
+  .addClass('code')
+  .html(post.toString());
 // document.querySelector('pre').classList.add('code');
 // document.querySelector('pre').innerHTML = post.toString();
 
