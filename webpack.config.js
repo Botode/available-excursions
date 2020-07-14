@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
@@ -13,8 +13,9 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = !isDev;
+const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
+const isDev = !isProd && !isTest;
 
 const optimization = () => {
   const config = {
@@ -95,9 +96,14 @@ const jsLoaders = () => {
 const plugins = () => {
   const base = [
     new HTMLWebpackPlugin({
-      template: './public/index.html',
-      filename: './index.html',
-      favicon: './public/favicon.ico',
+      template: 'index.html',
+      favicon: path.resolve(
+        __dirname,
+        'src',
+        'client',
+        'assets',
+        'favicon.ico',
+      ),
       minify: {
         collapseWhitespace: isProd,
         removeComments: isProd,
@@ -105,14 +111,14 @@ const plugins = () => {
       },
     }),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, 'src/public/favicon.ico'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-      ],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.resolve(__dirname, 'src','client','assets','favicon.ico'),
+    //       to: path.resolve(__dirname, 'dist'),
+    //     },
+    //   ],
+    // }),
     new MiniCssExtractPlugin({
       filename: filename('css'),
     }),
@@ -128,10 +134,10 @@ const plugins = () => {
 };
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
+  context: path.resolve(__dirname, 'src', 'client'),
   mode: 'development',
   entry: {
-    script: './app.js',
+    script: './app.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -140,8 +146,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', '.png', '.jsx'],
     alias: {
-      '@models': path.resolve(__dirname, 'src/models'),
-      '@': path.resolve(__dirname, 'src'),
+      '@models': path.resolve(__dirname, 'src', 'client', 'models'),
+      '@': path.resolve(__dirname, 'src', 'client'),
     },
   },
   optimization: optimization(),

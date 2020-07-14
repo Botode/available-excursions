@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-class App extends React.Component {
+import Comp from './Comp';
+import Styles from './styles/app.scss';
 
-  render() {
-      return (
-        <h1>Hello from React!</h1>
-      );
-  }
-}
 ReactDOM.render(
-  <App/>,
-  document.getElementById('root')
+  <React.StrictMode>
+    <Comp />
+  </React.StrictMode>,
+  document.getElementById('root'),
 );
