@@ -8,7 +8,7 @@
     "watch": "env-cmd -f .env.development.local webpack --mode development --watch",
     "start": "env-cmd -f .env.development.local webpack-dev-server --mode development --open",
     "stats": "env-cmd -f .env.development.local --use-shell \"webpack --json > stats.json && webpack-bundle-analyzer stats.json\"",
-    "lint": "env-cmd -e development . --ext .js,.ts,.jsx,.tsx",
+    "lint": "env-cmd -e development eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "env-cmd -e development eslint . --fix --ext .js,.ts,.jsx,.tsx",
     "server:start": "env-cmd -f .env.development.local --use-shell nodemon --exec yarn run babel-node src/server/server.js",
     "server:test": "env-cmd -e test jest",
