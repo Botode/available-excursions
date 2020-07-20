@@ -1,4 +1,4 @@
-import express from 'express';
+import fastify from 'fastify';
 import db from '../config/db_old';
 import Excursion from '../models/Excursion';
 

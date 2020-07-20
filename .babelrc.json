@@ -3,11 +3,15 @@
     [
       "@babel/preset-env",
       {
-        "targets": { "browsers": ["last 2 versions"] },
+        "targets": {
+          "browsers": ["last 2 versions"],
+          "node": "current"
+        },
         "useBuiltIns": "usage",
         "corejs": 3
       }
     ],
-    ["@babel/preset-react"]
+    ["@babel/preset-react"],
+    ["@babel/preset-typescript"]
   ]
 }
