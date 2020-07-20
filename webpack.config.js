@@ -7,9 +7,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const PostCSSImport = require('postcss-import');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const PostCSSImport = require('postcss-import');
 
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 
@@ -81,7 +82,7 @@ const babelOptions = (preset) => {
 const jsLoaders = () => {
   const loaders = [
     {
-      loader: 'babel-loader',
+      loader: require.resolve('babel-loader'),
       options: babelOptions(),
     },
   ];
@@ -135,7 +136,7 @@ const plugins = () => {
 
 module.exports = {
   context: path.resolve(__dirname, 'src', 'client'),
-  mode: 'development',
+  // mode: 'development',
   entry: {
     script: './app.jsx',
   },
@@ -149,6 +150,10 @@ module.exports = {
       '@models': path.resolve(__dirname, 'src', 'client', 'models'),
       '@': path.resolve(__dirname, 'src', 'client'),
     },
+    plugins: [PnpWebpackPlugin],
+  },
+  resolveLoader: {
+    plugins: [PnpWebpackPlugin.moduleLoader(module)],
   },
   optimization: optimization(),
   devServer: {
@@ -196,7 +201,7 @@ module.exports = {
         test: /\.ts$/i,
         exclude: /node_modules/,
         loader: {
-          loader: 'babel-loader',
+          loader: require.resolve('babel-loader'),
           options: babelOptions('@babel/preset-typescript'),
         },
       },
@@ -204,7 +209,7 @@ module.exports = {
         test: /\.jsx$/i,
         exclude: /node_modules/,
         loader: {
-          loader: 'babel-loader',
+          loader: require.resolve('babel-loader'),
           options: babelOptions('@babel/preset-react'),
         },
       },
