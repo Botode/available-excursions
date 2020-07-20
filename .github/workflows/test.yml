@@ -14,11 +14,12 @@ jobs:
         node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install -g yarn@latest
-      - run: yarn set version latest
-      - run: yarn install
-      - run: yarn lint
-      - run: yarn server:test
+          cmd: install
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: lint
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: server:test
