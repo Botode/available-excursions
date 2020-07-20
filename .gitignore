@@ -17,4 +17,5 @@ yarn-error.log*
 /.pnp
 .pnp.js
 _old/
-.yarn
+.yarn/*
+!.yarn/releases
