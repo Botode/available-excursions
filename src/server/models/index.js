@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const { Sequelize } = require('sequelize');
-const configs = require('../config/config.js');
+import { readdirSync } from 'fs';
+import { basename as _basename, join } from 'path';
+import { Sequelize } from 'sequelize';
+import configs from '../config/config';
 
-const basename = path.basename(__filename);
+const basename = _basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = configs[env];
 const db = {};
@@ -23,7 +23,7 @@ if (config.use_env_variable) {
   );
 }
 
-fs.readdirSync(__dirname)
+readdirSync(__dirname)
   .filter((file) => {
     return (
       file.indexOf('.') !== 0 &&
@@ -32,12 +32,19 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes,
-    );
-    console.log(typeof model);
-    db[model.name] = model;
+    (() => {
+      const modelPath = join(__dirname, file);
+      console.log(modelPath);
+      import(modelPath)
+        .then((modelModule) => {
+          const model = modelModule.default(
+            sequelize,
+            Sequelize.DataTypes,
+          );
+          db[model.name] = model;
+        })
+        .catch((err) => console.log(err));
+    })();
   });
 
 Object.keys(db).forEach((modelName) => {
@@ -49,4 +56,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

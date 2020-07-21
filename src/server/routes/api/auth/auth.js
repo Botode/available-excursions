@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 export default async (app, opts, next) => {
-  console.log(opts);
   const { User } = opts.models;
   User.sync();
   const schema = {
@@ -47,8 +46,6 @@ export default async (app, opts, next) => {
   app.post('/login', { schema }, async (request, reply) => {
     try {
       const { email, password } = request.body;
-
-      console.log(email);
       const user = await User.findOne({
         where: { email: email.toLowerCase() },
       });

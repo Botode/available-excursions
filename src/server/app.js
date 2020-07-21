@@ -1,7 +1,7 @@
 import path from 'path';
 import fastify from 'fastify';
 import autoload from 'fastify-autoload';
-import models from './models/index';
+import models from './models';
 import configs from './config/config';
 
 // db.authenticate()
