@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f .env.development.local webpack --mode development",
-    "build": "env-cmd -f .env.production.local webpack --mode production",
-    "watch": "env-cmd -f .env.development.local webpack --mode development --watch",
-    "start": "env-cmd -f .env.development.local webpack-dev-server --mode development --open",
-    "stats": "env-cmd -f .env.development.local --use-shell \"webpack --json > stats.json && webpack-bundle-analyzer stats.json\"",
+    "dev": "env-cmd -e development webpack --mode development",
+    "build": "env-cmd -e production webpack --mode production",
+    "watch": "env-cmd -e development webpack --mode development --watch",
+    "start": "env-cmd -e development webpack-dev-server --mode development --open",
+    "stats": "env-cmd -e development --use-shell \"webpack --json > stats.json && webpack-bundle-analyzer stats.json\"",
     "lint": "env-cmd -e development eslint . --ext .js,.ts,.jsx,.tsx",
     "lint:fix": "env-cmd -e development eslint . --fix --ext .js,.ts,.jsx,.tsx",
     "server:start": "env-cmd -f .env.development.local --use-shell nodemon --exec yarn run babel-node src/server/server.js",
@@ -15,9 +15,12 @@
     "server:test1": "env-cmd -e test babel-node src/server/test.js",
     "ts:build": "tsc -p tsconfig.json",
     "ts:start": "yarn node index.js",
-    "migrate": "env-cmd -f .env.development.local sequelize db:migrate:status",
-    "generate": "env-cmd -f .env.development.local sequelize-cli model:generate --name User",
-    "seed": "env-cmd -f .env.development.local sequelize-cli seed:generate --name demo-user"
+    "migrate": "env-cmd -f .env.development.local sequelize migration:generate --name Excursion",
+    "testin": "env-cmd -f .env.development.local yarn node testing.js",
+    "generate": "env-cmd -f .env.development.local sequelize model:create --name User --attributes name:string,state:boolean,birth:date,card:integer,role:enum:'{Admin,Guest}'",
+    "seed": "env-cmd -f .env.development.local sequelize seed:generate --name demo-user",
+    "migrate:auto": "env-cmd -f .env.development.local makemigration --name Excursion",
+    "info": "env-cmd -f .env.development.local sequelize db:migrate"
   },
   "engines": {
     "node": ">=8.10.0"
@@ -39,11 +42,13 @@
   },
   "dependencies": {
     "@yarnpkg/pnpify": "^2.1.0",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.0",
     "env-cmd": "^10.1.0",
     "fastify": "^3.0.2",
     "fastify-autoload": "^3.0.3",
     "jquery": "^3.5.1",
+    "jsonwebtoken": "^8.5.1",
     "normalize": "^0.3.1",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",

@@ -20,5 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn --immutable
-      - run: yarn lint
-      - run: yarn server:test
+      - name: Linting
+        run: yarn lint
+      - name: Testing
+        run: yarn server:test

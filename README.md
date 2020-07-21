@@ -1,4 +1,4 @@
 # available-excursions
 AvExc
 
-Use 'npm install && npm start' to get started
+Use 'yarn install && yarn start' to get started
